@@ -326,8 +326,14 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen w-full bg-surface-2 flex items-center justify-center p-0 md:p-8">
-      <div className="relative w-full max-w-[420px] md:rounded-[44px] md:border md:border-hairline bg-background overflow-hidden md:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.25)] min-h-screen md:min-h-[860px] md:max-h-[860px] flex flex-col">
+    <div className="min-h-[100dvh] w-full bg-surface-2 flex items-center justify-center p-0 md:p-8">
+      <div
+        className="relative w-full max-w-[420px] md:rounded-[44px] md:border md:border-hairline bg-background overflow-hidden md:shadow-[0_30px_80px_-20px_rgba(0,0,0,0.25)] min-h-[100dvh] md:min-h-[860px] md:max-h-[860px] flex flex-col"
+        style={{
+          paddingTop: "env(safe-area-inset-top)",
+          paddingBottom: "env(safe-area-inset-bottom)",
+        }}
+      >
         <StatusBar />
         <div className="flex-1 overflow-y-auto">
           {step.name === "home" && !dismissedThisSession && (
@@ -471,7 +477,8 @@ function App() {
         {/* Analytics debug toggle */}
         <button
           onClick={() => setShowEvents((v) => !v)}
-          className="absolute top-2 right-2 text-[10px] uppercase tracking-wider text-ink-soft hover:text-foreground bg-surface/80 backdrop-blur border border-hairline rounded-full px-2 py-1"
+          className="absolute bottom-24 right-3 z-30 text-[10px] uppercase tracking-wider text-ink-soft hover:text-foreground bg-surface/90 backdrop-blur border border-hairline rounded-full px-2.5 py-1.5 shadow-sm"
+          style={{ marginBottom: "env(safe-area-inset-bottom)" }}
           aria-label="Toggle analytics log"
         >
           {showEvents ? "Hide" : "Events"} ({events.length})
