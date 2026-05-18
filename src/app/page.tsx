@@ -7,9 +7,9 @@ import { Switch } from "@/components/ui/switch"; // Need to install switch maybe
 import { Button } from "@/components/ui/button";
 import { Mic, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 import { generateMissionCart } from "@/app/actions/curate-cart";
 import { toast } from "sonner";
+import { templates } from "@/lib/mock-data";
 
 export default function HomePage() {
   const router = useRouter();
@@ -51,24 +51,27 @@ export default function HomePage() {
           setVoiceSheetOpen(false);
           router.push("/cart");
         } catch (error) {
-          toast.error("Voice AI Curation failed.");
+          toast.success("Using Mission Template logic (AI offline)");
+          setCart(templates[0].defaultItems);
           setVoiceSheetOpen(false);
+          router.push("/cart");
         }
       }, 2000);
     }, 2500);
   };
 
   return (
-    <div className="flex flex-col h-full px-6">
+    <div className="flex flex-col h-full px-6 relative">
       <div className="flex items-center justify-between py-4">
+        <h1 className="text-[28px] font-black text-[#EB1700] tracking-tighter">DOORDASH</h1>
         {/* Simulate Next Day Toggle Button - prototype only */}
         <Button 
           variant="outline" 
           size="sm" 
-          className="w-full bg-orange-50 border-orange-200 text-orange-800 hover:bg-orange-100 hover:text-orange-900"
+          className="bg-orange-50 border-orange-200 text-orange-800 hover:bg-orange-100 hover:text-orange-900 h-8 text-[10px] rounded-full px-3"
           onClick={simulateNextDay}
         >
-          Simulate next day (mission complete)
+          Simulate next day
         </Button>
       </div>
 
@@ -127,37 +130,39 @@ export default function HomePage() {
         <Mic className="w-6 h-6" />
       </button>
 
-      {/* Voice Assistant Sheet */}
-      <Sheet open={voiceSheetOpen} onOpenChange={setVoiceSheetOpen}>
-        <SheetContent side="bottom" className="rounded-t-3xl border-t-0 p-6 pb-12 min-h-[40vh] flex flex-col items-center justify-center">
-          <div className="relative flex items-center justify-center w-24 h-24 mb-6">
-            {isListening ? (
-              <>
-                <div className="absolute inset-0 bg-primary/20 rounded-full animate-ping" />
-                <div className="absolute inset-2 bg-primary/40 rounded-full animate-pulse" />
-                <div className="relative bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center">
-                  <Mic className="w-8 h-8" />
-                </div>
-              </>
-            ) : isProcessing ? (
-              <>
-                <div className="absolute inset-0 rounded-full border-4 border-primary/20 border-t-primary animate-spin" />
-                <div className="relative bg-primary/10 text-primary w-16 h-16 rounded-full flex items-center justify-center">
-                  <Sparkles className="w-8 h-8 animate-pulse" />
-                </div>
-              </>
-            ) : null}
+      {/* Voice Assistant Overlay (Mobile Contained) */}
+      {voiceSheetOpen && (
+        <div className="absolute inset-0 z-50 bg-black/40 backdrop-blur-sm flex flex-col justify-end">
+          <div className="bg-white rounded-t-[32px] p-6 pb-16 min-h-[40vh] flex flex-col items-center justify-center animate-in slide-in-from-bottom duration-300">
+            <div className="relative flex items-center justify-center w-24 h-24 mb-6">
+              {isListening ? (
+                <>
+                  <div className="absolute inset-0 bg-[#EB1700]/20 rounded-full animate-ping" />
+                  <div className="absolute inset-2 bg-[#EB1700]/40 rounded-full animate-pulse" />
+                  <div className="relative bg-[#EB1700] text-white w-16 h-16 rounded-full flex items-center justify-center">
+                    <Mic className="w-8 h-8" />
+                  </div>
+                </>
+              ) : isProcessing ? (
+                <>
+                  <div className="absolute inset-0 rounded-full border-4 border-[#EB1700]/20 border-t-[#EB1700] animate-spin" />
+                  <div className="relative bg-[#EB1700]/10 text-[#EB1700] w-16 h-16 rounded-full flex items-center justify-center">
+                    <Sparkles className="w-8 h-8 animate-pulse" />
+                  </div>
+                </>
+              ) : null}
+            </div>
+            
+            <h2 className="text-2xl font-semibold mb-2 text-center transition-all">
+              {isListening ? "Listening..." : isProcessing ? "Orchestrating mission..." : ""}
+            </h2>
+            
+            <p className="text-lg text-center text-muted-foreground min-h-[60px] max-w-[280px]">
+              {transcript}
+            </p>
           </div>
-          
-          <h2 className="text-2xl font-semibold mb-2 text-center transition-all">
-            {isListening ? "Listening..." : isProcessing ? "Orchestrating mission..." : ""}
-          </h2>
-          
-          <p className="text-lg text-center text-muted-foreground min-h-[60px] max-w-[280px]">
-            {transcript}
-          </p>
-        </SheetContent>
-      </Sheet>
+        </div>
+      )}
     </div>
   );
 }

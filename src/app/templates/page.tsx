@@ -28,7 +28,7 @@ export default function TemplatesPage() {
         setCart(aiCuratedCart);
         router.push("/cart");
       } catch (error) {
-        toast.error("AI Curation failed. Falling back to default template.");
+        toast.success("Using Mission Template logic (AI offline)");
         setCart(template.defaultItems);
         router.push("/cart");
       } finally {
@@ -70,7 +70,7 @@ export default function TemplatesPage() {
           const isRecommended = index === 0;
 
           return (
-            <Card key={template.id} className={`w-[85vw] shrink-0 snap-center flex flex-col justify-between overflow-hidden transition-all ${isRecommended ? 'border-[#EB1700] ring-1 ring-[#EB1700]/20 shadow-md' : 'border-border'}`}>
+            <Card key={template.id} className={`w-[85%] shrink-0 snap-center flex flex-col justify-between overflow-hidden transition-all ${isRecommended ? 'border-[#EB1700] ring-1 ring-[#EB1700]/20 shadow-md' : 'border-border'}`}>
               <CardHeader className="pb-3">
                 <div className="flex justify-between items-start gap-4">
                   <div className="space-y-1">
