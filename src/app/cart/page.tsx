@@ -212,9 +212,9 @@ export default function CartPage() {
         </div>
       </div>
 
-      <div className="fixed bottom-20 left-0 right-0 p-4 bg-white/95 backdrop-blur-md border-t border-border/50 flex flex-col items-center">
+      <div className="absolute bottom-20 left-0 right-0 p-4 bg-white/95 backdrop-blur-md border-t border-border/50 flex flex-col items-center">
          <Button 
-          className="w-[calc(100%-2rem)] max-w-[361px] h-14 rounded-full text-lg font-semibold shadow-lg shadow-primary/25"
+          className="w-full h-14 rounded-full text-lg font-bold shadow-lg shadow-primary/25 bg-[#EB1700] hover:bg-[#EB1700]/90 text-white"
           onClick={handleCheckout}
         >
           Place Mission Order

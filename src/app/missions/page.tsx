@@ -91,10 +91,9 @@ export default function MissionsPage() {
                   </div>
                   
                   {/* Card */}
-                  <Card className="w-[calc(100%-3rem)] md:w-[calc(50%-2.5rem)] ml-4 md:ml-0 shadow-sm border-border">
-                    <CardContent className="p-4">
-                      <h3 className="font-semibold text-base mb-1">{mission.title}</h3>
-                      <div className="flex items-center text-xs text-muted-foreground gap-2 mb-3">
+                  <Card className="w-[calc(100%-3rem)] md:w-[calc(50%-2.5rem)] ml-4 md:ml-0 shadow-sm border-border overflow-hidden">
+                    <div className="bg-muted/30 p-3 border-b border-border flex items-center justify-between">
+                      <div className="flex items-center text-xs text-muted-foreground gap-2">
                         <span>{mission.date}</span>
                         {mission.guestCount > 1 && (
                           <>
@@ -103,13 +102,15 @@ export default function MissionsPage() {
                           </>
                         )}
                       </div>
+                      <Badge variant="secondary" className="bg-white border-border text-[10px] uppercase font-bold text-muted-foreground">Completed</Badge>
+                    </div>
+                    <CardContent className="p-4 pt-3">
+                      <h3 className="font-bold text-[17px] mb-4 text-foreground">{mission.title}</h3>
                       <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="w-full h-8 text-xs font-medium text-foreground border-border hover:bg-muted"
+                        className="w-full h-10 rounded-full font-bold bg-muted hover:bg-muted/80 text-foreground"
                         onClick={() => handleRunAgain(mission)}
                       >
-                        <RotateCw className="w-3.5 h-3.5 mr-1.5" />
+                        <RotateCw className="w-4 h-4 mr-2 text-foreground" />
                         Run this mission again
                       </Button>
                     </CardContent>

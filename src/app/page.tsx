@@ -5,10 +5,21 @@ import { useMissionStore } from "@/lib/store";
 import { MissionType } from "@/lib/types";
 import { Switch } from "@/components/ui/switch"; // Need to install switch maybe? Wait, I didn't install switch. I'll use a standard toggle or just a button for 'Simulate next day'.
 import { Button } from "@/components/ui/button";
+import { Mic, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet";
+import { generateMissionCart } from "@/app/actions/curate-cart";
+import { toast } from "sonner";
 
 export default function HomePage() {
   const router = useRouter();
   const setDeclaredMission = useMissionStore((state) => state.setDeclaredMission);
+  const setCart = useMissionStore((state) => state.setCart);
+  
+  const [isListening, setIsListening] = useState(false);
+  const [transcript, setTranscript] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [voiceSheetOpen, setVoiceSheetOpen] = useState(false);
 
   const handleMissionSelect = (type: MissionType) => {
     setDeclaredMission(type, 6, "Saturday, May 16, 2026");
@@ -17,6 +28,34 @@ export default function HomePage() {
 
   const simulateNextDay = () => {
     router.push("/feedback");
+  };
+
+  const startVoiceAssistant = () => {
+    setVoiceSheetOpen(true);
+    setIsListening(true);
+    setTranscript("");
+    setIsProcessing(false);
+    
+    // Simulate listening
+    setTimeout(() => {
+      setTranscript("I'm hosting 6 people for an intimate dinner party this Saturday.");
+      setIsListening(false);
+      setIsProcessing(true);
+      
+      // Simulate processing and directly route to AI cart
+      setTimeout(async () => {
+        setDeclaredMission("dinner-party", 6, "Saturday, May 16, 2026");
+        try {
+          const aiCuratedCart = await generateMissionCart("dinner-party", 6);
+          setCart(aiCuratedCart);
+          setVoiceSheetOpen(false);
+          router.push("/cart");
+        } catch (error) {
+          toast.error("Voice AI Curation failed.");
+          setVoiceSheetOpen(false);
+        }
+      }, 2000);
+    }, 2500);
   };
 
   return (
@@ -79,6 +118,46 @@ export default function HomePage() {
           Pick what you're doing, we'll handle the orchestration
         </p>
       </div>
+
+      {/* Voice Assistant FAB */}
+      <button 
+        onClick={startVoiceAssistant}
+        className="absolute bottom-[90px] right-6 w-14 h-14 bg-[#1A1A1A] text-white rounded-full flex items-center justify-center shadow-xl hover:scale-105 transition-transform z-20"
+      >
+        <Mic className="w-6 h-6" />
+      </button>
+
+      {/* Voice Assistant Sheet */}
+      <Sheet open={voiceSheetOpen} onOpenChange={setVoiceSheetOpen}>
+        <SheetContent side="bottom" className="rounded-t-3xl border-t-0 p-6 pb-12 min-h-[40vh] flex flex-col items-center justify-center">
+          <div className="relative flex items-center justify-center w-24 h-24 mb-6">
+            {isListening ? (
+              <>
+                <div className="absolute inset-0 bg-primary/20 rounded-full animate-ping" />
+                <div className="absolute inset-2 bg-primary/40 rounded-full animate-pulse" />
+                <div className="relative bg-primary text-white w-16 h-16 rounded-full flex items-center justify-center">
+                  <Mic className="w-8 h-8" />
+                </div>
+              </>
+            ) : isProcessing ? (
+              <>
+                <div className="absolute inset-0 rounded-full border-4 border-primary/20 border-t-primary animate-spin" />
+                <div className="relative bg-primary/10 text-primary w-16 h-16 rounded-full flex items-center justify-center">
+                  <Sparkles className="w-8 h-8 animate-pulse" />
+                </div>
+              </>
+            ) : null}
+          </div>
+          
+          <h2 className="text-2xl font-semibold mb-2 text-center transition-all">
+            {isListening ? "Listening..." : isProcessing ? "Orchestrating mission..." : ""}
+          </h2>
+          
+          <p className="text-lg text-center text-muted-foreground min-h-[60px] max-w-[280px]">
+            {transcript}
+          </p>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

@@ -65,12 +65,12 @@ export default function TemplatesPage() {
         </p>
       </div>
 
-      <div className="space-y-4 flex-1 pb-12">
+      <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-12 no-scrollbar -mx-6 px-6">
         {templates.map((template, index) => {
           const isRecommended = index === 0;
 
           return (
-            <Card key={template.id} className={`overflow-hidden transition-all ${isRecommended ? 'border-primary ring-1 ring-primary/20 shadow-md' : 'border-border'}`}>
+            <Card key={template.id} className={`w-[85vw] shrink-0 snap-center flex flex-col justify-between overflow-hidden transition-all ${isRecommended ? 'border-[#EB1700] ring-1 ring-[#EB1700]/20 shadow-md' : 'border-border'}`}>
               <CardHeader className="pb-3">
                 <div className="flex justify-between items-start gap-4">
                   <div className="space-y-1">
