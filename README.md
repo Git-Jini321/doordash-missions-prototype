@@ -1,9 +1,12 @@
-# DoorDash Missions Prototype
+# DoorDash Missions Mobile Prototype
 
-This is the interactive MVE prototype for **DoorDash Missions**, a final-week deliverable for the Kellogg MBA Tech Product Management course. It demonstrates our vision of evolving DoorDash from a delivery layer into a **mission orchestrator**.
+This is the consolidated repository for **DoorDash Missions**, a final-week interactive deliverable for the Kellogg MBA Tech Product Management course (Team A). 
+
+This unified repository contains both the **Next.js interactive prototype** and the **complete project documentation** (Product Requirements, Design System, Technical Decisions, User Research, etc.) located under the `/docs` directory.
 
 **Demo Link:** [Vercel Deployment URL will go here]  
-**Documentation:** [doordash-missions-prototype-docs](https://github.com/arjunbarge/doordash-missions-prototype-docs)
+**Handover Documentation:** [docs/FINAL_HANDOVER.md](docs/FINAL_HANDOVER.md)  
+**All Project Docs:** View the `/docs` folder for full specs.
 
 ## Local Setup
 
