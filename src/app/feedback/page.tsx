@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { ThumbsUp, ThumbsDown } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { Textarea } from "@/components/ui/textarea"; // wait, I might not have Textarea component, I'll use standard text area with tailwind classes
 import { toast } from "sonner";
 import { ScrollArea } from "@/components/ui/scroll-area";
 

@@ -139,7 +139,7 @@ export default function CartPage() {
                           </button>
                         )}
 
-                        <Accordion type="single" className="w-full mt-2 border-none">
+                        <Accordion className="w-full mt-2 border-none">
                           <AccordionItem value="reasoning" className="border-none">
                             <AccordionTrigger className="py-1 hover:no-underline text-xs text-primary font-medium flex gap-1 justify-start">
                               <Sparkles className="w-3.5 h-3.5 mr-1" />

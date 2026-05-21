@@ -3,11 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useMissionStore } from "@/lib/store";
 import { MissionType } from "@/lib/types";
-import { Switch } from "@/components/ui/switch"; // Need to install switch maybe? Wait, I didn't install switch. I'll use a standard toggle or just a button for 'Simulate next day'.
 import { Button } from "@/components/ui/button";
 import { Mic, Sparkles } from "lucide-react";
 import { useState } from "react";
-import { generateMissionCart } from "@/app/actions/curate-cart";
 import { toast } from "sonner";
 import { templates } from "@/lib/mock-data";
 

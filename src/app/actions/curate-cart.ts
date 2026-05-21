@@ -1,5 +1,3 @@
-"use server";
-
 import { GoogleGenAI, Type } from "@google/genai";
 import { CartItem, MissionType, Product } from "@/lib/types";
 import { products, merchants } from "@/lib/mock-data";
